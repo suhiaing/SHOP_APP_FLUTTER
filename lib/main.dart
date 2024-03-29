@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromRGBO(254, 206, 1, 1),
+            primary: const Color.fromRGBO(254, 206, 1, 1),
           ),
           inputDecorationTheme: const InputDecorationTheme(
             hintStyle: TextStyle(
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
             ),
             suffixIconColor: Colors.black45,
           ),
+          fontFamily: 'Lato',
         ),
         home: const HomePage());
   }
