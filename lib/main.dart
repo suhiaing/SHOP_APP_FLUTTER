@@ -26,6 +26,15 @@ class MyApp extends StatelessWidget {
             suffixIconColor: Colors.black45,
           ),
           fontFamily: 'Lato',
+          textTheme: const TextTheme(
+              titleMedium: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              bodySmall: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              )),
         ),
         home: const HomePage());
   }
