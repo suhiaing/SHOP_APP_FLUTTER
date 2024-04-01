@@ -15,7 +15,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     super.initState();
-    //selectedsize = 9;
+    selectedsize = 9;
     selectedsizeCondition = true;
   }
 
@@ -25,7 +25,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_new),
+        //leading: const Icon(Icons.arrow_back_ios_new),
         title: const Text(
           "Details",
         ),
