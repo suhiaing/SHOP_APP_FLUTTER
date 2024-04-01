@@ -4,11 +4,13 @@ class ProductCard extends StatelessWidget {
   final String title;
   final double price;
   final String image;
+  final Color bgColor;
   const ProductCard({
     super.key,
     required this.title,
     required this.price,
     required this.image,
+    required this.bgColor,
   });
 
   @override
@@ -17,8 +19,7 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Container(
         decoration: BoxDecoration(
-            color: const Color.fromRGBO(216, 240, 253, 1),
-            borderRadius: BorderRadius.circular(20)),
+            color: bgColor, borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 7),
           child: Column(
