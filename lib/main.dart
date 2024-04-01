@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/global_variables.dart';
-import 'package:shop_app_flutter/homepage.dart';
+//import 'package:shop_app_flutter/homepage.dart';
 import 'package:shop_app_flutter/product_detail_page.dart';
 
 void main() {
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
                   color: Colors.black,
                 ))),
         home: ProductDetailPage(
-          product: products[0],
+          product: products[1],
         ));
   }
 }

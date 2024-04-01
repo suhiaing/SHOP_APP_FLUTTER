@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final Map<String, Object> product;
   const ProductDetailPage({
     super.key,
     required this.product,
   });
 
+  @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    //selectedsize = 9;
+    selectedsizeCondition = true;
+  }
+
+  late int selectedsize = 0;
+  late bool selectedsizeCondition;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,72 +31,96 @@ class ProductDetailPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: Column(
           children: [
             Text(
-              product['title'] as String,
+              widget.product['title'] as String,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const Spacer(),
-            Image.asset(product['imageUrl'] as String),
+            Image.asset(widget.product['imageUrl'] as String),
             const Spacer(
               flex: 2,
             ),
-            Center(
-              child: Container(
-                width: 500,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(230, 232, 232, 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(230, 232, 232, 1),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          "\$${product['price']}",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "\$${widget.product['price']}",
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(
-                        height: 50,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: (product['sizes'] as List).length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Container(
-                                  width: 55,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: 50,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: (widget.product['sizes'] as List).length,
+                          itemBuilder: (context, index) {
+                            final size =
+                                (widget.product['sizes'] as List)[index];
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedsize = size;
+                                  });
+                                },
+                                child: Chip(
+                                  label: Text(
+                                    size.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      (product['sizes'] as List)[index]
-                                          .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                  ),
+                                  backgroundColor: selectedsize == size &&
+                                          selectedsizeCondition == true
+                                      ? Theme.of(context).primaryColor
+                                      : const Color.fromRGBO(245, 247, 249, 1),
                                 ),
-                              );
-                            }),
-                      ),
-                      const Placeholder(
-                        fallbackHeight: 100,
-                      )
-                    ],
-                  ),
+                              ),
+                            );
+                          }),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          minimumSize: const Size(double.infinity, 60),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.shopping_cart_rounded,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              "Add to Cart",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ],
                 ),
               ),
             ),
