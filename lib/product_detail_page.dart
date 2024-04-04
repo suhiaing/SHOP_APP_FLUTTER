@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_flutter/global_variables.dart';
+import 'package:shop_app_flutter/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, Object> product;
@@ -13,13 +14,34 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-    selectedsize = 9;
+  int? selectedSize = 0;
+
+  void onTap() {
+    if (selectedSize != 0) {
+      Provider.of<CartProvider>(context, listen: false).addToCart(
+        {
+          'id': widget.product['id'],
+          'title': widget.product['title'],
+          'price': widget.product['price'],
+          'imageUrl': widget.product['imageUrl'],
+          'company': widget.product['company'],
+          'size': selectedSize,
+        },
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Product added successfully!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a size!'),
+        ),
+      );
+    }
   }
 
-  late int selectedsize = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -80,7 +102,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      selectedsize = size;
+                                      selectedSize = size;
                                     });
                                   },
                                   child: Chip(
@@ -90,7 +112,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                           .textTheme
                                           .titleMedium,
                                     ),
-                                    backgroundColor: selectedsize == size
+                                    backgroundColor: selectedSize == size
                                         ? Theme.of(context).primaryColor
                                         : const Color.fromRGBO(
                                             245, 247, 249, 1),
@@ -101,16 +123,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              Map<String, Object?> order = {
-                                'title': widget.product['title'],
-                                'imageUrl': widget.product['imageUrl'],
-                                'sizes': widget.product['sizes']
-                              };
-                              cart.add(order);
-                            });
-                          },
+                          onPressed: onTap,
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_flutter/global_variables.dart';
+import 'package:shop_app_flutter/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -11,6 +12,9 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartProvider>().cart;
+    print(cart);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Cart"),
@@ -18,7 +22,9 @@ class _CartPageState extends State<CartPage> {
       body: ListView.builder(
           itemCount: cart.length,
           itemBuilder: (context, index) {
+            print(index);
             final cartItem = cart[index];
+            print(cartItem);
             return Padding(
               padding: const EdgeInsets.all(15),
               child: ListTile(
@@ -34,7 +40,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
                 subtitle: Text(
-                  "size: ${(cartItem['sizes'] as int).toString()}",
+                  "size: ${(cartItem['size'] as int).toString()}",
                   style: const TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 18,
